@@ -22,6 +22,6 @@ const getBoardsByUid = (uid) => new Promise((resolve, reject) => {
     });
 });
 
-const getBoardById = (boardId) => axios.get(`${baseUrl}/boards/${boardId}.json`);
+const getSingleBoard = (boardId) => axios.get(`${baseUrl}/boards/${boardId}.json`);
 
-export default { getBoardsByUid, getBoardById };
+export default { getSingleBoard, getBoardsByUid };
