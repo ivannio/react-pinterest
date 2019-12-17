@@ -3,13 +3,13 @@ import firebase from 'firebase/app';
 
 import firebaseConnection from '../helpers/data/connection';
 import Auth from '../components/Auth/Auth';
-import MyNavBar from '../components/MyNavBar/MyNavBar';
-import BoardsContainer from '../components/BoardsContainer/BoardsContainer';
+import MyNavbar from '../components/MyNavBar/MyNavBar';
 import SingleBoard from '../components/SingleBoard/SingleBoard';
+import BoardsContainer from '../components/BoardsContainer/BoardsContainer';
 
 import './App.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 firebaseConnection();
 
@@ -49,13 +49,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed, selectedBoardId } = this.state;
+    const { authed } = this.state;
+
     return (
       <div className="App">
-        <MyNavBar authed={authed} />
-        {
-          this.renderView()
-        }
+        <MyNavbar authed={authed} />
+        { this.renderView() }
       </div>
     );
   }

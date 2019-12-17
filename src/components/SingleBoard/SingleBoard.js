@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import Board from '../Board/Board';
 import boardData from '../../helpers/data/boardsData';
+import pinData from '../../helpers/data/pinData';
 
+import Pin from '../Pin/Pin';
 
 class SingleBoard extends React.Component {
   static propTypes = {
@@ -13,15 +14,21 @@ class SingleBoard extends React.Component {
 
   state = {
     board: {},
+    pins: [],
   }
 
   componentDidMount() {
     const { selectedBoardId } = this.props;
-    boardData.getBoardById(selectedBoardId)
+    boardData.getSingleBoard(selectedBoardId)
       .then((request) => {
         this.setState({ board: request.data });
+        pinData.getPinsByBoardId(selectedBoardId)
+          .then((pins) => {
+            this.setState({ pins });
+          })
+          .catch((errorFromGetPins) => console.error({ errorFromGetPins }));
       })
-      .catch((error) => console.error(error));
+      .catch((errorFromGetSingleBoard) => console.error({ errorFromGetSingleBoard }));
   }
 
   removeSelectedBoardId = (e) => {
@@ -31,17 +38,19 @@ class SingleBoard extends React.Component {
   }
 
   render() {
-    const { board } = this.state;
-    return (<div>
-      <button className="btn btn-info" onClick={this.removeSelectedBoardId}>x Close Board View</button>
-      <div className="SingleBoard col-8 offset-2">
-        <h2>{board.name}</h2>
-        <p>{board.description}</p>
-        <div className="d-flex flex-wrap">
-          {/* all pins */}
+    const { board, pins } = this.state;
+    return (
+      <div>
+        <button className="btn btn-info" onClick={this.removeSelectedBoardId}>x Close Board View</button>
+        <div className="SingleBoard col-8 offset-2">
+          <h2>{board.name}</h2>
+          <p>{board.description}</p>
+          <div className="d-flex flex-wrap">
+            { pins.map((pin) => <Pin pin={pin}/>)}
+          </div>
         </div>
       </div>
-    </div>);
+    );
   }
 }
 
