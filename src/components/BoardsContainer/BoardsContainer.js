@@ -6,6 +6,7 @@ import BoardForm from '../BoardForm/BoardForm';
 
 import authData from '../../helpers/data/authData';
 import boardData from '../../helpers/data/boardData';
+import boardsData from '../../helpers/data/boardsData';
 
 
 class BoardsContainer extends React.Component {
@@ -41,6 +42,15 @@ class BoardsContainer extends React.Component {
       .catch((errorFromSaveBoard) => console.error({ errorFromSaveBoard }));
   }
 
+  updateBoard = (boardId, updatedBoard) => {
+    boardData.updateBoard(boardId, updatedBoard)
+      .then(() => {
+        this.getBoards();
+        this.setState({ editMode: false, showBoardForm: false });
+      })
+      .catch((error) => console.error({ error }));
+  }
+
   setEditMode = (editMode) => {
     this.setState({ editMode, showBoardForm: true });
   }
@@ -59,7 +69,7 @@ class BoardsContainer extends React.Component {
     return (
       <div>
         <button className="btn btn-outline-primary" onClick={this.setShowBoardForm}>Add a new Board</button>
-        { this.state.showBoardForm && <BoardForm addBoard={this.addBoard} editMode={this.state.editMode} boardToEdit={this.state.boardToEdit} />}
+        { this.state.showBoardForm && <BoardForm addBoard={this.addBoard} editMode={this.state.editMode} boardToEdit={this.state.boardToEdit} updateBoard={this.updateBoard} />}
         <div className="d-flex justify-content-around flex-wrap">
         {this.state.boards.map((board) => (<Board key={board.id} board={board} setSingleBoard={setSingleBoard} setEditMode={this.setEditMode} setBoardToEdit={this.setBoardToEdit} />))}
         </div>
