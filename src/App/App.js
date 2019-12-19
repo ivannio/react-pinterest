@@ -3,13 +3,11 @@ import firebase from 'firebase/app';
 
 import firebaseConnection from '../helpers/data/connection';
 import Auth from '../components/Auth/Auth';
-import MyNavbar from '../components/MyNavBar/MyNavBar';
+import MyNavbar from '../components/MyNavbar/MyNavbar';
 import SingleBoard from '../components/SingleBoard/SingleBoard';
 import BoardsContainer from '../components/BoardsContainer/BoardsContainer';
 
 import './App.scss';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 firebaseConnection();
 
